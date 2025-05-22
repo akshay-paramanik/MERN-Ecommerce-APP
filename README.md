@@ -22,7 +22,6 @@ A full-featured modern ecommerce web application built using the MERN Stack (Mon
 | Tech         | Used For         |
 |--------------|------------------|
 | React.js     | Frontend UI      |
-| Tailwind CSS / Custom CSS | Styling       |
 | Node.js      | Backend runtime  |
 | Express.js   | API server       |
 | MongoDB      | Database         |
