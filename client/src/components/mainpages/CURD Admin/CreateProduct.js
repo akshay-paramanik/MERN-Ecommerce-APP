@@ -1,27 +1,25 @@
 import React, { useContext, useState } from 'react';
 import { GlobalState } from '../../../GlobalState';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 function CreateProduct() {
   const state = useContext(GlobalState);
   const [isLogged] = state.userAPI.isLogged;
   const [isAdmin] = state.userAPI.isAdmin;
-  const [categories] = state.catagoryAPI.catagory;
+  const [catagoryName] = state.catagoryAPI.catagory;
   const [token] = state.token;
 
   const [product, setProduct] = useState({
-    product_id: '',
+    product_id: '',  
     title: '',
     description: '',
-    category: '',
+    catagory: '',
     price: '',
     content: '',
     images: '',
     quantity: ''
   });
-
-  const navigate = useNavigate();
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -33,20 +31,21 @@ function CreateProduct() {
     setProduct({ ...product, images: file });
   };
 
-  const handleSubmit = async (e) => {
+  const CreateProduct = async (e) => {
     e.preventDefault();
+
     try {
       const formData = new FormData();
-      for (const key in product) {
-        formData.append(key, product[key]);
-      }
+      Object.entries(product).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
 
       await axios.post('http://localhost:5000/api/products', formData, {
         withCredentials: true,
-        headers: { Authorization: token }
+        headers: { Authorization: token },
       });
 
-      navigate('/');
+      window.location.href = '/';
     } catch (err) {
       alert(err.response?.data?.msg || 'Product creation failed');
     }
@@ -56,24 +55,85 @@ function CreateProduct() {
   if (!isAdmin && isLogged) return <Navigate to="/" replace />;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input type="text" name="product_id" placeholder="Product ID" value={product.product_id} onChange={onChangeInput} required />
-        <input type="text" name="title" placeholder="Title" value={product.title} onChange={onChangeInput} required />
-        <input type="text" name="description" placeholder="Description" value={product.description} onChange={onChangeInput} required />
-        
+    <div className="create-product-container">
+      <h2>Create Product</h2>
+      <form onSubmit={CreateProduct} className="create-product-form" encType="multipart/form-data">
+        <input
+          type='text'
+          placeholder='Product ID'
+          name='product_id'
+          onChange={onChangeInput}
+          value={product.product_id}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Product Title"
+          name="title"
+          onChange={onChangeInput}
+          value={product.title}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Product Description"
+          name="description"
+          onChange={onChangeInput}
+          value={product.description}
+          required
+        />
+
         <label>Select Category</label>
-        <select name="category" value={product.category} onChange={onChangeInput} required>
+        <select
+          name="catagory"
+          onChange={onChangeInput}
+          value={product.catagory}
+          required
+        >
           <option value="">-- Select --</option>
-          {categories.map((cat, idx) => (
-            <option key={idx} value={cat.name}>{cat.name}</option>
+          {catagoryName.map((ctgry, index) => (
+            <option key={index} value={ctgry.name}>
+              {ctgry.name}
+            </option>
           ))}
         </select>
 
-        <input type="number" name="price" placeholder="Price" value={product.price} onChange={onChangeInput} required />
-        <input type="text" name="content" placeholder="Content" value={product.content} onChange={onChangeInput} required />
-        <input type="file" name="images" onChange={handleUpload} accept="image/*" required />
-        <input type="number" name="quantity" placeholder="Quantity" value={product.quantity} onChange={onChangeInput} required />
+        <input
+          type="number"
+          placeholder="Product Price"
+          name="price"
+          onChange={onChangeInput}
+          value={product.price}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Product Content"
+          name="content"
+          onChange={onChangeInput}
+          value={product.content}
+          required
+        />
+
+        <input
+          type="file"
+          name="images"
+          onChange={handleUpload}
+          accept="image/*"
+          required
+        />
+
+        <input
+          type="number"
+          name="quantity"
+          placeholder="Enter quantity"
+          onChange={onChangeInput}
+          value={product.quantity}
+          required
+        />
 
         <input type="submit" value="Create Product" />
       </form>
