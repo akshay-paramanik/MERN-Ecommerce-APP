@@ -4,8 +4,10 @@ import { GlobalState } from '../../../GlobalState';
 import { Navigate } from 'react-router-dom';
 
 function CreateCatagory() {
-    const state = useContext(GlobalState)
-    const [token] = state.token;
+     const state = useContext(GlobalState);
+     const [token] = state.token;
+     const [catagory, setCatagory] = state.catagoryAPI.catagory;
+     const createCatagoryOfItem = state.catagoryAPI.createCatagoryOfItem;
     const[isAdmin,setIsAdmin] = state.userAPI.isAdmin
     const[isLogged,setIsLogged] = state.userAPI.isLogged
     const[newCatagory,setNewCatagory] = useState({
@@ -24,17 +26,8 @@ function CreateCatagory() {
     }
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        try{
-            await axios.post('http://localhost:5000/api/catagory',newCatagory,{
-                headers: { Authorization: token }
-            },{
-                withCredentials:true
-            })
-            window.location.href = '/';
-
-        }catch(err){
-            alert(err.response.message);
-        }
+        createCatagoryOfItem(newCatagory)
+        
     }
     
   return (
