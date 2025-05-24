@@ -1,7 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { GlobalState } from '../GlobalState';
+import { Navigate } from 'react-router-dom';
 
-function CatagoryAPI() {
+function CatagoryAPI(token) {
+ 
     const[catagory,setCatagory] = useState([]);
 
     const getCatagory = async ()=>{
@@ -10,6 +13,20 @@ function CatagoryAPI() {
         
         setCatagory(res.data);
     }
+    const createCatagoryOfItem = async ({name})=>{
+      try{
+            await axios.post('http://localhost:5000/api/catagory',{name},{
+                headers: { Authorization: token }
+            },{
+                withCredentials:true
+            });
+            await getCatagory();
+            alert("Catagory Added")
+
+        }catch(err){
+            alert("server error");
+        }
+    }
 
     useEffect(()=>{
         getCatagory();
@@ -17,7 +34,8 @@ function CatagoryAPI() {
     
 
   return {
-    catagory : [catagory,setCatagory]
+    catagory : [catagory,setCatagory],
+    createCatagoryOfItem:createCatagoryOfItem
   }
 }
 
