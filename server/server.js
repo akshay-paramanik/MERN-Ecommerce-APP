@@ -14,7 +14,7 @@ const paymentRoute = require('./routes/paymentRoute');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://akshayeommerce.onrender.com",
     credentials: true
 }));
 app.use(bodyParser.json());
