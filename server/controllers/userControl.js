@@ -23,10 +23,13 @@ const userController = {
             const accesstoken = createAccessToken({id:newUser._id})
             const refreshtoken = createRefreshToken({id:newUser._id})
 
-            res.cookie("refreshtoken",refreshtoken,{
-                httpOnly:true,
-                path:'/user/refresh_token'
-            })
+            res.cookie("refreshtoken", refreshtoken, {
+                httpOnly: true,
+                  path: "/user/refresh_token",
+                  sameSite: "None",       // ✅ Required for cross-origin
+                  secure: true            // ✅ Required on HTTPS (Render uses HTTPS)
+                });
+
 
             res.json({msg:accesstoken})
 
