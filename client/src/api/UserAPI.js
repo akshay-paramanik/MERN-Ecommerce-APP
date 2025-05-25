@@ -22,6 +22,7 @@ const UserAPI = (token) => {
                     res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
 
                     setCart(res.data.cart)
+                
                     setCurrentUser(res.data);
                     
 
@@ -78,7 +79,7 @@ const findUser = async ()=>{
 const orders = async (orderItems, formData)=>{
     if (!isLogged) return alert("Please log in first.");
     try{
-        await axios.patch('http://localhost:5000/user/order', {
+        await axios.patch(`${configURL}/user/order`, {
     cart: orderItems,
     address: formData.address,
     totalAmount: formData.totalAmount
