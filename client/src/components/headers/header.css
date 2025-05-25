@@ -1,41 +1,85 @@
-header{
-    min-height: 70px;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
+header {
+  min-height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+  background: #fff;
 }
-header .logo{
-    /* flex:1 */
+
+header .logo a {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #333;
 }
-header a{
-    text-transform: uppercase;
-    color:black;
+
+header ul {
+  list-style: none;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+  padding-top: 60px;
+  transition: 0.3s ease;
+  text-align: center;
 }
-header ul li{
-    display: inline-block;
-    opacity: 0.7;
-    padding: 0 20px;
+
+header ul li {
+  margin: 20px 0;
+  font-size: 1.2rem;
 }
-header ul li:hover{
-    opacity: 1;
+
+header ul li a {
+  text-decoration: none;
+  color: #333;
 }
-.menu{
-    display: none;
+
+.menu {
+  display: none;
+  cursor: pointer;
 }
-.cart-icon{
-    position: relative;
+
+.menu.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
-.cart-icon span{
-    background-color: crimson;
-    border-radius: 20px;
-    color: white;
+
+.cart-icon {
+  position: relative;
+}
+
+.cart-icon span {
+  background: crimson;
+  border-radius: 50%;
+  color: white;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 7px;
+  font-size: 10px;
+}
+
+/* ✅ Show menu and make responsive */
+@media (max-width: 768px) {
+  .menu {
+    display: block;
+  }
+
+  header ul {
+    display: block;
+  }
+
+  header .cart-icon {
     position: absolute;
-    top: -10px;
-    right: -10px;
-    padding: 5px 7px;
-    font-size: 10px;
+    top: 15px;
+    right: 60px;
+  }
 }
