@@ -1,3 +1,3 @@
-const url = `http://localhost:5000`;
+const url = `https://three0daysbackend.onrender.com`;
 
 module.exports = url;
