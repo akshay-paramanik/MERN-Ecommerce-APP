@@ -18,7 +18,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(bodyParser.json());
-const PORT = process.env.PORT || 8000;112
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 
