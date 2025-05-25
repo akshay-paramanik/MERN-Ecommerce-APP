@@ -66,17 +66,14 @@ const userController = {
                 const accesstoken = createAccessToken({id:user._id})
             const refreshtoken = createRefreshToken({id:user._id})
 
-            res.cookie("refreshtoken",refreshtoken,{
-                httpOnly:true,
-                path:'/user/refresh_token'
-            })
-            // res.cookie("refreshtoken", refreshtoken, {
-            //     httpOnly: true,
-            //     path: '/user/refresh_token',
-            //     // maxAge: 7*24*60*60*1000 // 7 days
-            // });
-            
+           res.cookie("refreshtoken", refreshtoken, {
+  httpOnly: true,
+  path: "/user/refresh_token",
+  sameSite: "None",
+  secure: true
+});
 
+            
             res.json({accesstoken});
 
 
